@@ -6,7 +6,8 @@ from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.conf import settings
 # Create your models here.
-
+def upload_location(intsance,filename):
+    return "{0}/{1}".format(intsance.id,filename)
 class Post(models.Model):
     """docstring for .
     user=models.ForeignKey(
@@ -14,12 +15,15 @@ class Post(models.Model):
         on_delete=models.CASCADE,default=1)"""
     title=models.CharField(max_length=100)
     #slug=models.SlugField(unique=True)
-    #image=models.FileField(null=True,blank=True)
-    #height_field=models.IntegerField(default=250)
-    #width_field=models.IntegerField(default=250)
+    image=models.ImageField(upload_to=upload_location,height_field='height_field',width_field='width_field',null=True,blank=True)
+    height_field=models.IntegerField(default=250)
+    width_field=models.IntegerField(default=250)
     content=models.TextField()
     timestamp=models.DateTimeField(auto_now=False,auto_now_add=True)
     updated=models.DateTimeField(auto_now=True,auto_now_add=False)
+
+    def __str__(self):
+        return self.title
 
     def get_absolute_url(self):
         #return "/posts/details/%s" %(self.id)

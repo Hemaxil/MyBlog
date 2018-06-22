@@ -3,6 +3,10 @@
 
 <h1>{{obj.title}}</h1>
 <p>{{obj.content}}</p>
+{% if obj.image %}
+  <img src="{{obj.image.url}}" alt="img field">
+{% endif %}
+
 {{obj.timestamp}}<br>
 {{obj.updated}}
 <form method="POST" action="{% url "posts:delete" id=obj.id %}">

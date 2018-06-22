@@ -20,7 +20,7 @@ def post_list(request):
         }
     return render(request,'Blog/base.html',context)
 def post_create(request):
-    form=PostForm(request.POST)
+    form=PostForm(request.POST,request.FILES)
     if form.is_valid():
         instance=form.save(commit=False)
         instance.save()
@@ -33,7 +33,7 @@ def post_create(request):
 def post_update(request,id):
     queryset=get_object_or_404(Post,id=id)
     if request.method=='POST':
-        form=PostForm(request.POST,instance=queryset)
+        form=PostForm(request.POST,request.FILES,instance=queryset)
         if form.is_valid:
             form.save()
             return HttpResponseRedirect(queryset.get_absolute_url())
