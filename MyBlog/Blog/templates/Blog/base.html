@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block head_title %}Latest Posts {%endblock head_title %}</title>
+  </head>
+  <body>
+      {% block content %}
+      <header>
+        <nav>
+          <ul>
+            <li>Home</li>
+            <li>Contacts</li>
+          </ul>
+        </nav>
+        <form method="GET" action="">
+          <input type="text" name='q' placeholder="Search Posts">
+          <input type="submit" value="Search">
+        </form>
+       <h1>Latest Posts</h1>
+     </header>
+
+       <ul>
+         {% for i in objlist %}
+        <li><a href="{{i.get_absolute_url}}">{{i.title}}</a></li>
+         {% endfor %}
+      </ul>
+      <form method=POST action="{% url "posts:create" %}">
+        {% csrf_token %}
+        <button type="submit">Create New</button>
+      </form>
+
+      <div class="pagination">
+    <span class="step-links">
+        {% if objlist.has_previous %}
+            <a href="?{{page_var}}=1"> first</a>
+            <a href="?{{page_var}}={{ objlist.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ objlist.number }} of {{ objlist.paginator.num_pages }}.
+        </span>
+
+        {% if objlist.has_next %}
+            <a href="?{{page_var}}={{ objlist.next_page_number }}">next</a>
+            <a href="?{{page_var}}={{ obljlist.paginator.num_pages }}">lasts</a>
+        {% endif %}
+    </span>
+</div>
+  {% endblock content %}
+  </body>
+</html>

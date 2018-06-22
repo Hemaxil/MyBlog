@@ -1,0 +1,24 @@
+{% extends "Blog/base.html" %}
+{% block content %}
+
+<h1>{{obj.title}}</h1>
+<p>{{obj.content}}</p>
+{{obj.timestamp}}<br>
+{{obj.updated}}
+<form method="POST" action="{% url "posts:delete" id=obj.id %}">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+</form>
+<form method="POST" action="{% url "posts:create" %}">
+  {% csrf_token %}
+  <button type="submit">Create</button>
+</form>
+<form action="{% url "posts:update" id=obj.id %}">
+  {% csrf_token %}
+  <button type="submit">Update</button>
+</form>
+<form action="{% url "posts:lists" %}">
+  {% csrf_token %}
+  <button type="submit">All Posts</button>
+</form>
+{% endblock content %}

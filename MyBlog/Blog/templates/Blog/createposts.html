@@ -1,0 +1,12 @@
+{% extends "Blog/base.html" %}
+{% block content %}
+{% if instance %}
+  <form method="POST" action='{% url "posts:update" id=instance.id %}'>
+{% else %}
+  <form method="POST" action=''>
+{% endif %}
+{% csrf_token %}
+  {{form.as_p}}
+<input type="submit" value="Create">
+</form>
+{% endblock content %}
