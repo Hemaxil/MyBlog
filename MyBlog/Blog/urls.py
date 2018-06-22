@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
 from .views import *
+
 #always put app_name
 app_name='Blog'
 urlpatterns = [
@@ -13,3 +14,4 @@ urlpatterns = [
     #need to add app_name in urls in Blog --for namespace
     url(r'^details/(?P<id>\d+)',post_detail,name="details"),
 ]
+# defining path for static files to be stored
