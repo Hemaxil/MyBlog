@@ -11,15 +11,15 @@
 {{obj.updated}}
 <form method="POST" action="{% url "posts:delete" id=obj.id %}">
   {% csrf_token %}
-  <button type="submit">Delete</button>
+  <input type="submit" value="Delete">
 </form>
 <form method="POST" action="{% url "posts:create" %}">
   {% csrf_token %}
-  <button type="submit">Create</button>
+  <input type="submit" value="Create New">
 </form>
 <form action="{% url "posts:update" id=obj.id %}">
   {% csrf_token %}
-  <button type="submit">Update</button>
+  <input type="submit" value="Update Post">
 </form>
 <form action="{% url "posts:lists" %}">
   {% csrf_token %}

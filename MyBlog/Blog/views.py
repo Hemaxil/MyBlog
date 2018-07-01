@@ -20,12 +20,16 @@ def post_list(request):
         }
     return render(request,'Blog/base.html',context)
 def post_create(request):
-    form=PostForm(request.POST,request.FILES)
-    if form.is_valid():
-        instance=form.save(commit=False)
-        instance.save()
-        #messages.success(request,"Successfully Created")
-        return HttpResponseRedirect(instance.get_absolute_url())
+    if request.method=='POST':
+        form=PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            #messages.success(request,"Successfully Created")
+            return HttpResponseRedirect(instance.get_absolute_url())
+    else:
+        form=PostForm()
+
 #messages.error(request,"Error in creating")
     context={'form':form,}
     return render(request,'Blog/createposts.html',context)

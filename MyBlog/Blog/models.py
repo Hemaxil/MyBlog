@@ -13,12 +13,12 @@ class Post(models.Model):
     user=models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,default=1)"""
-    title=models.CharField(max_length=100)
+    title=models.CharField(max_length=100,blank=True,null=True)
     #slug=models.SlugField(unique=True)
     image=models.ImageField(upload_to=upload_location,height_field='height_field',width_field='width_field',null=True,blank=True)
-    height_field=models.IntegerField(default=250)
-    width_field=models.IntegerField(default=250)
-    content=models.TextField()
+    height_field=models.IntegerField(default=50)
+    width_field=models.IntegerField(default=50)
+    content=models.TextField(blank=True)
     timestamp=models.DateTimeField(auto_now=False,auto_now_add=True)
     updated=models.DateTimeField(auto_now=True,auto_now_add=False)
 
