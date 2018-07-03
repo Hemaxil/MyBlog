@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{action}}</title>
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+  </head>
+  <body>
+      {% block content %}
+      <header>
+        <nav>
+          <ul>
+            <li>Home</li>
+            <li>Contacts</li>
+          </ul>
+        </nav>
+     </header>
+
+  <form method="POST" action="">
+  {% csrf_token %}
+  {{form.as_p}}
+  <input type="submit" value={{action}}>
+  </form>
+  {% endblock content %}
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container'>
+  <div class='col-sm-6 col-sm-offset-3'>
+    <h1>{{obj.title}}</h1>
+    <small>created on: {{obj.timestamp}}</small>
+    <p>{{obj.content|linebreaks}}</p>
+    {% if obj.image %}
+      <img src="{{obj.image.url}}" alt="img field" height='720px' width='1020px'>
+    {% endif %}
+  </div>
+  <br>
+  <p><a href="{{i.get_absolute_url}}"class="btn btn-primary" role="button">View</a>
+  <a href="{% url "posts:delete" id=obj.id %}"class="btn btn-primary" role="button">Delete</a>
+  <a href="{% url "posts:update" id=obj.id %}"class="btn btn-primary" role="button">Update</a></p>
+  <p><a href="{% url "posts:create" %}" class="btn btn-primary" role="button">Create New Post</a></p>
+</div>
+<!--<form method="POST" action="{% url "posts:create" %}">
+  {% csrf_token %}
+  <input type="submit" value="Create New">
+</form>-->
+{% endblock content %}

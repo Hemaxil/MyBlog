@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block head_title %}Create New Post{%endblock head_title %}
+{% block content %}
+<div class='container'>
+  <h2>{{fname}}</h2>
+  <br>
+  {% if instance %}
+    <form method="POST" action='{% url "posts:update" id=instance.id %}' enctype="multipart/form-data">
+  {% else %}
+    <form method="POST" action='' enctype="multipart/form-data">
+  {% endif %}
+  {% csrf_token %}
+    {{form.as_p}}
+  <input type="submit" value="{{fname}}" class='btn btn-primary'>
+  </form>
+</div>
+{% endblock content %}

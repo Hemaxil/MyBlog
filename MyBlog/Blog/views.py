@@ -8,6 +8,7 @@ from .models import *
 from .forms import *
 
 def post_list(request):
+    title="Latest Posts"
     queryset_list=Post.objects.all()
     paginator = Paginator(queryset_list,5) # Show 25 contacts per page
     page_var='abc'
@@ -15,11 +16,13 @@ def post_list(request):
     queryset = paginator.get_page(page)
 # to obtain 5 Latest posts
     context={
+        'title':title,
         'objlist':queryset,
         'page_var':page_var
         }
-    return render(request,'Blog/base.html',context)
+    return render(request,'base.html',context)
 def post_create(request):
+    fname="Create Post"
     if request.method=='POST':
         form=PostForm(request.POST,request.FILES)
         if form.is_valid():
@@ -31,10 +34,11 @@ def post_create(request):
         form=PostForm()
 
 #messages.error(request,"Error in creating")
-    context={'form':form,}
-    return render(request,'Blog/createposts.html',context)
+    context={'form':form,'fname':fname}
+    return render(request,'createposts.html',context)
 
 def post_update(request,id):
+    fname="Update Post"
     queryset=get_object_or_404(Post,id=id)
     if request.method=='POST':
         form=PostForm(request.POST,request.FILES,instance=queryset)
@@ -44,13 +48,13 @@ def post_update(request,id):
     else:
         form=PostForm(instance=queryset)
 
-    context={'instance':queryset,'form':form}
-    return render(request,'Blog/createposts.html',context)
+    context={'instance':queryset,'form':form,'fname':fname,}
+    return render(request,'createposts.html',context)
 
 def post_detail(request,id):
     queryset=get_object_or_404(Post,id=id)
     context={'obj':queryset}
-    return render(request,'Blog/detail.html',context)
+    return render(request,'detail.html',context)
 
 def post_delete(request,id):
     queryset=get_object_or_404(Post,id=id)

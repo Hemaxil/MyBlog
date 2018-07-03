@@ -17,9 +17,14 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from Accounts.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('posts/',include("Blog.urls",namespace='posts')),
+    path('login/',login_view,name="loginv"),
+    path('logout/',logout_view,name="logoutv"),
+    path('register/',register_view,name="registerv"),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('',include("Blog.urls",namespace='posts')),
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

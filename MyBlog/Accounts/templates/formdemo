@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{action}}</title>
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+  </head>
+  <body>
+      {% block content %}
+      <header>
+        <nav>
+          <ul>
+            <li>Home</li>
+            <li>Contacts</li>
+          </ul>
+        </nav>
+     </header>
+
+  <form method="POST" action="">
+  {% csrf_token %}
+  <div>
+    <td>{{form.username.label_tag}}</td>
+    <td>{{form.username}}</td>
+  </div>
+  <br>
+  <br>
+  <div>
+    <td>{{form.password.label_tag}}</td>
+      <td>{{form.password}}</td>
+  </div>
+  <br>
+  <br>
+  <div>
+    {% if form.email %}
+    <td>{{form.email.label_tag}}</td>
+    <td>{{form.email}}</td>
+    {% endif %}
+  </div>
+  <br>
+  <br>
+  <div>
+    {% if form.confirm_email %}
+    <td>{{form.confirm_email.label_tag}}</td>
+    <td>{{form.confirm_email}}</td>
+    {% endif %}
+  </div>
+  <input type="submit" value={{action}}>
+  </form>
+  {% endblock content %}
+  </body>
+</html>
