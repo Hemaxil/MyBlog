@@ -2,6 +2,7 @@ from urllib.parse import quote_plus
 from django.shortcuts import render
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 # Create your views here.
+from django.db.models import Q
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib import messages
 from django.http import HttpResponse,HttpResponseRedirect,Http404
@@ -9,17 +10,20 @@ from .models import *
 from .forms import *
 
 def post_list(request):
-    title="Latest Posts"
+    ptitle="Latest Posts"
     queryset_list=Post.objects.active()
     if request.user.is_superuser:
         queryset_list=Post.objects.all()
+    query=request.GET.get("q")
+    if query:
+        queryset_list=queryset_list.filter(Q(title__icontains=query) | Q(content__icontains=query))
     paginator = Paginator(queryset_list,5) # Show 25 contacts per page
     page_var='abc'
     page = request.GET.get(page_var)
     queryset = paginator.get_page(page)
 # to obtain 5 Latest posts
     context={
-        'title':title,
+        'title':ptitle,
         'objlist':queryset,
         'page_var':page_var
         }
