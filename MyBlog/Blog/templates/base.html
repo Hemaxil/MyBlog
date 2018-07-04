@@ -31,7 +31,7 @@
                  <div class="thumbnail border rounded border-primary">
                      <div class='caption col-sm-10 col-sm-offset-2'>
                        <h3><a href="{{i.get_absolute_url}}">{{i.title}}</a></h3>
-                       <p><small>created on : {{i.timestamp}}</small><br>
+                       <p><small>created by {{i.user}} on : {{i.timestamp}}</small><br>
                          {{i.content|linebreaks|truncatechars:100}}</p>
                          {% if i.image %}
                           <img src="{{i.image.url}}" alt="img field" height='520px' width='520px'>

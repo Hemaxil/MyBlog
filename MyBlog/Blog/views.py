@@ -1,3 +1,4 @@
+from urllib.parse import quote_plus
 from django.shortcuts import render
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 # Create your views here.
@@ -22,11 +23,15 @@ def post_list(request):
         }
     return render(request,'base.html',context)
 def post_create(request):
+    if not request.user.is_authenticated:
+        raise Http404
     fname="Create Post"
     if request.method=='POST':
         form=PostForm(request.POST,request.FILES)
         if form.is_valid():
             instance=form.save(commit=False)
+            instance.user=request.user
+            print(request.user,instance.user)
             instance.save()
             #messages.success(request,"Successfully Created")
             return HttpResponseRedirect(instance.get_absolute_url())
@@ -38,8 +43,12 @@ def post_create(request):
     return render(request,'createposts.html',context)
 
 def post_update(request,slug):
+    if not request.user.is_authenticated:
+        raise Http404
     fname="Update Post"
     queryset=get_object_or_404(Post,slug=slug)
+    if queryset.user!=request.user:
+        raise Http404
     if request.method=='POST':
         form=PostForm(request.POST,request.FILES,instance=queryset)
         if form.is_valid:
@@ -52,11 +61,19 @@ def post_update(request,slug):
     return render(request,'createposts.html',context)
 
 def post_detail(request,slug):
+    if not request.user.is_authenticated:
+        raise Http404
     queryset=get_object_or_404(Post,slug=slug)
-    context={'obj':queryset}
+    share_content=quote_plus(queryset.content)
+    share_title=quote_plus(queryset.title)
+    context={'obj':queryset,'sharecontent':share_content,'sharetitle':share_title,}
     return render(request,'detail.html',context)
 
 def post_delete(request,slug):
+    if not request.user.is_authenticated:
+        raise Http404
     queryset=get_object_or_404(Post,slug=slug)
+    if queryset.user!=request.user:
+        raise Http404
     queryset.delete()
     return redirect('posts:lists')

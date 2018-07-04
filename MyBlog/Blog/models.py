@@ -27,10 +27,9 @@ def pre_save_receiver(sender,instance,*args,**kwargs):
         instance.slug=create_slug(instance)
 
 class Post(models.Model):
-    """docstring for .
     user=models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,default=1)"""
+        on_delete=models.CASCADE,default=1)
     title=models.CharField(max_length=100,blank=True,null=True)
     slug=models.SlugField(unique=True)
     image=models.ImageField(upload_to=upload_location,height_field='height_field',width_field='width_field',null=True,blank=True)
