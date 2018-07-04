@@ -10,7 +10,9 @@ from .forms import *
 
 def post_list(request):
     title="Latest Posts"
-    queryset_list=Post.objects.all()
+    queryset_list=Post.objects.active()
+    if request.user.is_superuser:
+        queryset_list=Post.objects.all()
     paginator = Paginator(queryset_list,5) # Show 25 contacts per page
     page_var='abc'
     page = request.GET.get(page_var)
@@ -23,7 +25,7 @@ def post_list(request):
         }
     return render(request,'base.html',context)
 def post_create(request):
-    if not request.user.is_authenticated:
+    if not (request.user.is_authenticated or request.user.is_superuser):
         raise Http404
     fname="Create Post"
     if request.method=='POST':
@@ -43,12 +45,13 @@ def post_create(request):
     return render(request,'createposts.html',context)
 
 def post_update(request,slug):
-    if not request.user.is_authenticated:
+    if not (request.user.is_superuser or request.user.is_authenticated):
         raise Http404
     fname="Update Post"
     queryset=get_object_or_404(Post,slug=slug)
-    if queryset.user!=request.user:
-        raise Http404
+    if not request.user.is_superuser:
+        if queryset.user!=request.user:
+            raise Http404
     if request.method=='POST':
         form=PostForm(request.POST,request.FILES,instance=queryset)
         if form.is_valid:
@@ -56,12 +59,11 @@ def post_update(request,slug):
             return HttpResponseRedirect(queryset.get_absolute_url())
     else:
         form=PostForm(instance=queryset)
-
     context={'instance':queryset,'form':form,'fname':fname,}
     return render(request,'createposts.html',context)
 
 def post_detail(request,slug):
-    if not request.user.is_authenticated:
+    if not (request.user.is_authenticated or request.user.is_superuser):
         raise Http404
     queryset=get_object_or_404(Post,slug=slug)
     share_content=quote_plus(queryset.content)
@@ -70,7 +72,7 @@ def post_detail(request,slug):
     return render(request,'detail.html',context)
 
 def post_delete(request,slug):
-    if not request.user.is_authenticated:
+    if not (request.user.is_authenticated or request.user.is_superuser):
         raise Http404
     queryset=get_object_or_404(Post,slug=slug)
     if queryset.user!=request.user:

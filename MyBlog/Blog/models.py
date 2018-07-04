@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 from django.urls import reverse
 from django.db.models.signals import pre_save
@@ -25,7 +25,9 @@ def create_slug(instance,new_slug=None):
 def pre_save_receiver(sender,instance,*args,**kwargs):
     if not instance.slug:
         instance.slug=create_slug(instance)
-
+class PostManager(models.Manager):
+    def active(self,*args,**kwargs):
+        return super(PostManager,self).filter(draft=False).filter(publish__lte=timezone.now())
 class Post(models.Model):
     user=models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -36,9 +38,11 @@ class Post(models.Model):
     height_field=models.IntegerField(default=50)
     width_field=models.IntegerField(default=50)
     content=models.TextField(blank=True)
+    draft=models.BooleanField(default=False)
+    publish=models.DateField(auto_now=False,auto_now_add=False)
     timestamp=models.DateTimeField(auto_now=False,auto_now_add=True)
     updated=models.DateTimeField(auto_now=True,auto_now_add=False)
-
+    objects=PostManager()
     def __str__(self):
         return self.title
 
