@@ -5,7 +5,7 @@
   <h2>{{fname}}</h2>
   <br>
   {% if instance %}
-    <form method="POST" action='{% url "posts:update" id=instance.id %}' enctype="multipart/form-data">
+    <form method="POST" action='{% url "posts:update" slug=instance.slug %}' enctype="multipart/form-data">
   {% else %}
     <form method="POST" action='' enctype="multipart/form-data">
   {% endif %}

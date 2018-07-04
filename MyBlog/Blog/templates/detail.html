@@ -11,8 +11,8 @@
   </div>
   <br>
   <p><a href="{{i.get_absolute_url}}"class="btn btn-primary" role="button">View</a>
-  <a href="{% url "posts:delete" id=obj.id %}"class="btn btn-primary" role="button">Delete</a>
-  <a href="{% url "posts:update" id=obj.id %}"class="btn btn-primary" role="button">Update</a></p>
+  <a href="{% url "posts:delete" slug=obj.slug %}"class="btn btn-primary" role="button">Delete</a>
+  <a href="{% url "posts:update" slug=obj.slug %}"class="btn btn-primary" role="button">Update</a></p>
   <p><a href="{% url "posts:create" %}" class="btn btn-primary" role="button">Create New Post</a></p>
 </div>
 <!--<form method="POST" action="{% url "posts:create" %}">

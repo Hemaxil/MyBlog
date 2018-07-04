@@ -37,17 +37,15 @@
                           <img src="{{i.image.url}}" alt="img field" height='520px' width='520px'>
                           <br>
                         {% endif %}
-                        <p><a href="{{i.get_absolute_url}}"class="btn btn-primary" role="button">View</a>  <a href="{% url "posts:create" %}" class="btn btn-primary" role="button">New Post</a></p>
-                   </div>
-
-
-
+                        <p><a href="{{i.get_absolute_url}}"class="btn btn-primary" role="button">View</a></p>
+                      </div>
                  </div>
                 </div>
                 <br>
               </div>
               <br>
             {% endfor %}
+            <a href="{% url "posts:create" %}" class="btn btn-primary" role="button">New Post</a></p>
        </div>
      </div>
        <footer>

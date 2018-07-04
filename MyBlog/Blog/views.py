@@ -37,9 +37,9 @@ def post_create(request):
     context={'form':form,'fname':fname}
     return render(request,'createposts.html',context)
 
-def post_update(request,id):
+def post_update(request,slug):
     fname="Update Post"
-    queryset=get_object_or_404(Post,id=id)
+    queryset=get_object_or_404(Post,slug=slug)
     if request.method=='POST':
         form=PostForm(request.POST,request.FILES,instance=queryset)
         if form.is_valid:
@@ -51,12 +51,12 @@ def post_update(request,id):
     context={'instance':queryset,'form':form,'fname':fname,}
     return render(request,'createposts.html',context)
 
-def post_detail(request,id):
-    queryset=get_object_or_404(Post,id=id)
+def post_detail(request,slug):
+    queryset=get_object_or_404(Post,slug=slug)
     context={'obj':queryset}
     return render(request,'detail.html',context)
 
-def post_delete(request,id):
-    queryset=get_object_or_404(Post,id=id)
+def post_delete(request,slug):
+    queryset=get_object_or_404(Post,slug=slug)
     queryset.delete()
     return redirect('posts:lists')
