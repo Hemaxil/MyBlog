@@ -6,6 +6,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{% static "css/base.css" %}">
+    {% block head_extra %}{% endblock head_extra%}
   </head>
   <body>
     <div class='container'>
@@ -33,9 +34,10 @@
                        <h3><a href="{{i.get_absolute_url}}">{{i.title}}</a></h3>
                        <p><small>created by {{i.user}} on : {{i.publish}}</small><br>
                          {% if i.draft %}<small><span> Draft</span></small>{% endif %}
-                         {{i.content|linebreaks|truncatechars:100}}</p>
+
+                         <p class='content-markdown'>{{i.content}}</p>
                          {% if i.image %}
-                          <img src="{{i.image.url}}" alt="img field" height='520px' width='520px'>
+                          <img src="{{i.image.url}}"class='img-fluid' alt="img field">
                           <br>
                         {% endif %}
                         <p><a href="{{i.get_absolute_url}}"class="btn btn-primary" role="button">View</a></p>
@@ -70,16 +72,37 @@
 </footer>
   {% endblock content %}
 </div>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.4.0/marked.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+    $(".content-markdown").each(function(){
+      var content=$(this).text()
+      var markedContent=marked(content)
+      $(this).html(markedContent)
+  })
+  $(".content-markdown img").each(function(){
+    $(this).addClass("img-fluid")
+})
+})
+
+  </script>
+
   </body>
 
 </html>
