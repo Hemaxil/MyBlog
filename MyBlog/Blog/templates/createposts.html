@@ -1,20 +1,32 @@
 {% extends "base.html" %}
 {% block head_title %}Create New Post{%endblock head_title %}
 {% block head_extra %}
-{{form.media}}
+  {{form.media}}
 {% endblock head_extra %}
 {% block content %}
 <div class='container'>
-  <h2>{{fname}}</h2>
-  <br>
-  {% if instance %}
-    <form method="POST" action='{% url "posts:update" slug=instance.slug %}' enctype="multipart/form-data">
-  {% else %}
-    <form method="POST" action='' enctype="multipart/form-data">
-  {% endif %}
-  {% csrf_token %}
-    {{form.as_p}}
-  <input type="submit" value="{{fname}}" class='btn btn-primary'>
-  </form>
+  <div class='row'>
+    <div class='col-sm-6'>
+      <h1>Preview</h1>
+      <h3 id='preview-title'></h3>
+      <p id='preview-content'></p>
+    </div>
+    <div class='col-sm-4'>
+      <h2>{{fname}}</h2>
+      <br>
+      {% if instance %}
+        <form method="POST" action='{% url "posts:update" slug=instance.slug %}' enctype="multipart/form-data">
+      {% else %}
+        <form method="POST" action='' enctype="multipart/form-data">
+      {% endif %}
+      {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="{{fname}}" class='btn btn-primary'>
+      </form>
+    </div>
+
+  </div>
+  </div>
+
 </div>
 {% endblock content %}

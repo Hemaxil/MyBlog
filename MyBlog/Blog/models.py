@@ -5,6 +5,12 @@ from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.conf import settings
+#from markdown_deux import markdown
+# not using markdown_deux since its not considering linebreaks instead using python markdown library
+#for that install markdown lib using pip
+import markdown
+from django.utils.safestring import mark_safe
+
 # Create your models here.
 def upload_location(intsance,filename):
     return "{0}/{1}".format(intsance.id,filename)
@@ -50,4 +56,12 @@ class Post(models.Model):
         #return "/posts/details/%s" %(self.id)
         #never forget to add current_app, won't work without it
         return reverse("posts:details",kwargs={"slug":self.slug},current_app='Blog')
+
+    def get_markdown(self):
+        content=self.content
+        #gives marked content
+        mcontent=markdown.markdown(content, extensions=['markdown.extensions.nl2br'])
+        return mark_safe(mcontent)
+
+
 pre_save.connect(pre_save_receiver,sender=Post)
