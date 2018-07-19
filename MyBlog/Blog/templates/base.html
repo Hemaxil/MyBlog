@@ -4,6 +4,7 @@
   <head>
     <title>{% block head_title %}Latest Posts {%endblock head_title %}</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     {% block head_extra %}{% endblock head_extra%}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
@@ -19,8 +20,13 @@
           Welcome:{{request.user}}
         </nav>
         <form method="GET" action="">
-          <input type="text" name='q' placeholder="Search Posts">
-          <input type="submit" value="Search">
+          <div class="input-group mb-3 col-sm-6">
+            <input type="text"  class='form-control' name='q' placeholder="Search Posts">
+            <div class="input-group-append">
+              <!--<input type="submit" value="Search" class="btn btn-outline-secondary">-->
+              <button type="submit" class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
         </form>
        <h1>Latest Posts</h1>
      </header>
