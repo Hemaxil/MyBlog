@@ -42,11 +42,18 @@
           <br>
           <blockquote class="blockquote">
             <p class="mb-0">{{comment.comment_text}}</p>
-            <footer class="blockquote-footer">by <cite title="Source Title"> {{comment.user.username}} on {{comment.timestamp}}</cite>
+            <footer class="blockquote-footer">by <cite title="Source Title"> {{comment.user.username}} on {{comment.timestamp|timesince}} ago|
+              {% if comment.children.count > 0 %}
+                {% if comment.children.count > 1 %}
+                  {{comment.children.count}} Comments|
+                  {% endif %}
+                  {{comment.children.count}} Comment|
+                  {% endif %}</cite><a href=# class='reply-btn'>reply</a></footer>
+            <div class='comment-reply'>
               {% for child in comment.children %}
               <blockquote class="blockquote">
                 <p class="mb-0">{{child.comment_text}}</p>
-                <footer class="blockquote-footer">by <cite title="Source Title"> {{child.user.username}} on {{child.timestamp}}</cite>
+                <footer class="blockquote-footer">by <cite title="Source Title"> {{child.user.username}} on {{child.timestamp|timesince}} ago|<a href=#>reply</a></cite>
                 </footer>
               </blockquote>
               {% endfor %}
@@ -56,7 +63,8 @@
                 {{comment_form}}
                 <input type="submit" value="Reply" class="btn btn-default">
               </form>
-            </footer>
+          </div>
+
           </blockquote>
           <!--{{comment.content_object}}-->
           <hr>

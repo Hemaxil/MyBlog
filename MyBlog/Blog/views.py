@@ -90,9 +90,10 @@ def post_detail(request,slug):
         comment_text=comment_form.cleaned_data.get("comment_text")
         try:
             parent_id=request.POST.get("parent_id")
+            parent_obj=Comment.objects.get(id=parent_id)
         except:
-            parent_id=null
-        parent_obj=Comment.objects.get(id=parent_id)
+            parent_obj=None
+
 
         new_comment=Comment.objects.create(user=request.user,content_type=content_type,object_id=obj_id,
                                         comment_text=comment_text,parent=parent_obj)

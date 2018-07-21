@@ -6,7 +6,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     {% block head_extra %}{% endblock head_extra%}
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="{% static 'base.css' %}" rel="stylesheet" >
   </head>
   <body>
     <div class='container'>
@@ -95,40 +95,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.4.0/marked.min.js"></script>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-    $(".content-markdown").each(function(){
-      var content=$(this).text()
-      var markedContent=marked(content)
-      $(this).html(markedContent)
-  })
-  $(".post-content img").each(function(){
-    $(this).addClass("img-fluid")
-})
- //preview title
- var inputTitle=$("#id_title");
- function setTitle(value){
-   $("#preview-title").text(value);
- }
- setTitle(inputTitle.val());
- inputTitle.keyup(function(){
-   setTitle($(this).val())
- })
-console.log(inputTitle.val(),$("#preview-title").val())
- //preview content
- var inputContent=$("#id_content");
-
- function setContent(value){
-   $("#preview-content").html(marked(value));
-   $("preview-content img").each(function(){
-     $(this).addClass("img-fluid");
-   })
- }
- setContent(inputContent.val());
- inputContent.keyup(function(){
-  setContent($(this).val())
- })
-})
+  <script src="{% static 'basescripts.js' %}">
 
   </script>
 
