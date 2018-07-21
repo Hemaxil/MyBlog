@@ -1,16 +1,16 @@
-from django.db import models
-from django.utils import timezone
-# Create your models here.
-from django.urls import reverse
-from django.db.models.signals import pre_save
-from django.utils.text import slugify
+from comments.models import Comment,CommentManager
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.db.models.signals import pre_save
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.text import slugify
 #from markdown_deux import markdown
 # not using markdown_deux since its not considering linebreaks instead using python markdown library
 #for that install markdown lib using pip
-import markdown
 from django.utils.safestring import mark_safe
-
+import markdown
 # Create your models here.
 def upload_location(intsance,filename):
     return "{0}/{1}".format(intsance.id,filename)
@@ -63,5 +63,11 @@ class Post(models.Model):
         mcontent=markdown.markdown(content, extensions=['markdown.extensions.nl2br'])
         return mark_safe(mcontent)
 
+    @property
+    def comments(self):
+        return Comment.objects.filter_by_instance(self)
 
+    @property
+    def get_content_type(self):
+        return ContentType.objects.get_for_model(self.__class__)
 pre_save.connect(pre_save_receiver,sender=Post)
