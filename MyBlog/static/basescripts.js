@@ -33,7 +33,7 @@ setContent($(this).val())
 
 })
 
-document.querySelector('.reply-btn').addEventListener('click',function(e){
-  e.preventDefault();
+document.querySelector('.reply-btn').addEventListener('click',function(event){
+  event.preventDefault();
   document.querySelector('.comment-reply').style='display:block;';
 },false);

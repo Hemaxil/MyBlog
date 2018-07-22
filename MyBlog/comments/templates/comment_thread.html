@@ -1,0 +1,73 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block head_title %}Latest Posts {%endblock head_title %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    {% block head_extra %}{% endblock head_extra%}
+    <link href="{% static 'base.css' %}" rel="stylesheet" >
+  </head>
+  <body>
+    <div class='container'>
+      <header>
+        <nav>
+          <ul>
+            <li>Home</li>
+            <li>Contacts</li>
+          </ul>
+          Welcome:{{request.user}}
+        </nav>
+{% block content %}
+<div class=container>
+  <div class='col-sm-6'>
+    <blockquote class="blockquote">
+      <p class="mb-0">{{comment.comment_text}}</p>
+      <footer class="blockquote-footer">by <cite title="Source Title"> {{comment.user.username}} on {{comment.timestamp|timesince}} ago
+        {% if comment.children.count > 0 %}
+          {% if comment.children.count > 1 %}
+            {{comment.children.count}} Comments|
+            {% endif %}
+            {{comment.children.count}} Comment|
+            {% endif %}</cite></footer>
+            <hr>
+      <div class=container>
+        {% for child in comment.children %}
+        <blockquote class="blockquote">
+          <p class="mb-0">{{child.comment_text}}</p>
+          <footer class="blockquote-footer">by <cite title="Source Title"> {{child.user.username}} on {{child.timestamp|timesince}} ago</cite>
+          </footer>
+        </blockquote>
+        {% endfor %}
+        <form method="POST" action=" ">
+          {% csrf_token %}
+          <input type="hidden" name="parent_id" value='{{comment.id}}'>
+          {{comment_form}}
+          <input type="submit" value="Reply" class="btn btn-default">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+</div>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.4.0/marked.min.js"></script>
+
+
+  </script>
+
+  </body>
+
+</html>

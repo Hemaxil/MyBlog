@@ -24,6 +24,7 @@ urlpatterns = [
     path('logout/',logout_view,name="logoutv"),
     path('register/',register_view,name="registerv"),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('comments/',include("comments.urls",namespace='comments')),
     path('',include("Blog.urls",namespace='posts')),
 ]
 if settings.DEBUG:

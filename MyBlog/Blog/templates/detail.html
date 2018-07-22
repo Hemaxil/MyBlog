@@ -48,12 +48,13 @@
                   {{comment.children.count}} Comments|
                   {% endif %}
                   {{comment.children.count}} Comment|
-                  {% endif %}</cite><a href=# class='reply-btn'>reply</a></footer>
+                  {% endif %}</cite><a href=# class='reply-btn'>reply|</a><a href={{comment.get_absolute_url}}>Thread</a></footer>
             <div class='comment-reply'>
               {% for child in comment.children %}
               <blockquote class="blockquote">
                 <p class="mb-0">{{child.comment_text}}</p>
-                <footer class="blockquote-footer">by <cite title="Source Title"> {{child.user.username}} on {{child.timestamp|timesince}} ago|<a href=#>reply</a></cite>
+                <footer class="blockquote-footer">by <cite title="Source Title"> {{child.user.username}} on {{child.timestamp|timesince}} ago|
+                  <a href=#>reply</a></cite>|
                 </footer>
               </blockquote>
               {% endfor %}

@@ -4,6 +4,8 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.urls import reverse
+
 
 # Create your models here.
 #ModelManagers redefine the qs tools--like .all(),...
@@ -36,6 +38,9 @@ class Comment(models.Model):
     #replies to main comments
     def children(self):
         return Comment.objects.filter(parent=self)
+
+    def get_absolute_url(self):
+        return reverse("comments:thread",kwargs={"id":self.id},current_app='comments')
 
     @property
     def is_parent(self):
