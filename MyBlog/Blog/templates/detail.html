@@ -7,6 +7,7 @@
     {% endif %}
     <h1>{{obj.title}}</h1>{% if obj.draft %}<small><span> Draft</span></small>{% endif %}
     <small>created by {{obj.user}} on: {{obj.publish}}</small>
+    <br><small>Read time:{{obj.read_time|time:'i'}} minutes</small>
     <br>
     <div class="fb-like" data-href="{{request.build_absolute_uri}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
     <br>

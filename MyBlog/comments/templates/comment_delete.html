@@ -25,36 +25,14 @@
             {% endif %}
           </ol>
         </nav>
-      Welcome:{{request.user}}</header>
-
 {% block content %}
 <div class=container>
   <div class='col-sm-6'>
-    <blockquote class="blockquote">
-      <p class="mb-0">{{comment.comment_text}}</p>
-      <footer class="blockquote-footer">by <cite title="Source Title"> {{comment.user.username}} on {{comment.timestamp|timesince}} ago
-        {% if comment.children.count > 0 %}
-          {% if comment.children.count > 1 %}
-            {{comment.children.count}} Comments|
-            {% endif %}
-            {{comment.children.count}} Comment|
-            {% endif %}</cite></footer>
-            {% if request.user == comment.user %}<a href={{comment.get_delete_url}} class="btn btn-default">Delete</a>{%endif%}
-            <hr>
-      <div class=container>
-        {% for child in comment.children %}
-        <blockquote class="blockquote">
-          <p class="mb-0">{{child.comment_text}}</p>
-          <footer class="blockquote-footer">by <cite title="Source Title"> {{child.user.username}} on {{child.timestamp|timesince}} ago</cite>
-          </footer>
-          {% if request.user == child.user %} <a href={{child.get_delete_url}} class="btn btn-default">Delete</a> {%endif%}
-        </blockquote>
-        {% endfor %}
         <form method="POST" action=" ">
           {% csrf_token %}
-          <input type="hidden" name="parent_id" value='{{comment.id}}'>
-          {{comment_form}}
-          <input type="submit" value="Reply" class="btn btn-default">
+          <p>Are you sure you want to delete:{{ obj.comment_text}} ?</p>
+          <input type="submit" value="Delete" class="btn btn-warning">
+          <a href={{obj.get_absolute_url}} class="btn btn-default">Cancel</a>
         </form>
       </div>
     </div>

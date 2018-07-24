@@ -1,5 +1,6 @@
 from .models import Post
 from .forms import PostForm
+from .counts import get_read_time
 from comments.forms import CommentForm
 from comments.models import Comment
 from django.contrib import messages
@@ -76,7 +77,6 @@ def post_detail(request,slug):
     queryset=get_object_or_404(Post,slug=slug)
     share_content=quote_plus(queryset.content)
     share_title=quote_plus(queryset.title)
-    print(queryset.get_content_type)
     initial_data={
     'content_type':queryset.get_content_type,
     'object_id':queryset.id,

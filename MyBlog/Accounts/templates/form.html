@@ -8,19 +8,15 @@
   <body>
       {% block content %}
       <header>
-        <nav>
-          <ul>
-            <li>Home</li>
-            <li>Contacts</li>
-          </ul>
-        </nav>
+        <h1>{{action}}</h1>
      </header>
-
+<div class=container>
   <form method="POST" action="">
   {% csrf_token %}
   {{form.as_p}}
   <input type="submit" value={{action}}>
   </form>
+</div>
   {% endblock content %}
   </body>
 </html>

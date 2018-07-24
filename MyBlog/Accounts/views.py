@@ -7,6 +7,7 @@ def login_view(request):
     action="Login"
     print(request.user.is_authenticated)
     form=UserLoginForm(request.POST)
+
     if form.is_valid():
         username=form.cleaned_data.get("username")
         password=form.cleaned_data.get("password")
@@ -23,6 +24,7 @@ def logout_view(request):
 def register_view(request):
     action="Register"
     form=UserRegisterForm(request.POST)
+    print(form.errors)
     if form.is_valid():
         user=form.save(commit=False)
         user.set_password(form.cleaned_data.get("password"))

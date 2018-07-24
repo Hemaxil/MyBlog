@@ -34,13 +34,16 @@ class Comment(models.Model):
         ordering=['-timestamp']
 
     def __str__(self):
-        return self.user.username
+        return str(self.id)
     #replies to main comments
     def children(self):
         return Comment.objects.filter(parent=self)
 
     def get_absolute_url(self):
         return reverse("comments:thread",kwargs={"id":self.id},current_app='comments')
+
+    def get_delete_url(self):
+        return reverse("comments:comment_delete",kwargs={"id":self.id},current_app='comments')
 
     @property
     def is_parent(self):

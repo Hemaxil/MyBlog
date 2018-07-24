@@ -6,7 +6,7 @@ from .views import *
 #always put app_name
 app_name='Blog'
 urlpatterns = [
-    #url(r'^details/(?P<slug>[\w-]+)/delete',post_delete,name='delete'),
+    url(r'^(?P<id>\d+)/delete',comment_delete,name='comment_delete'),
     url(r'^(?P<id>\d+)',comment_thread,name="thread"),
 ]
 # defining path for static files to be stored
